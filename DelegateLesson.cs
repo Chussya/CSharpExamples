@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CSharpHints
+﻿namespace CSharpHints
 {
     class DelegateLesson : ILesson
     {
@@ -13,20 +9,20 @@ namespace CSharpHints
             // Create delegates:
             // #1
             // without constructor:
-            Greeting greeting = BilboGreeting;
+            Greeting? greeting = BilboGreeting;
             ToConsole(greeting);
             Console.WriteLine();
 
             // #2
             // with constructor
             greeting = null;
-            greeting = new Greeting(BilboGreeting);
+            greeting = new Greeting(GendalfGreeting);
             ToConsole(greeting);
             Console.WriteLine();
 
             // #3
             // send name of foo
-            ToConsole(this.BilboGreeting);
+            ToConsole(BilboGreeting);
             Console.WriteLine();
 
             // Edit delegate:
@@ -37,12 +33,12 @@ namespace CSharpHints
 
             ToConsole(greeting);
             Console.WriteLine();
-            ToConsole(this.BilboGreeting, this.GendalfGreeting);
+            ToConsole(BilboGreeting, GendalfGreeting);
             Console.WriteLine();
 
             // remove from delegate
             greeting -= GendalfGreeting;
-            ToConsole(greeting);
+            ToConsole(greeting!);
             Console.WriteLine();
         }
 

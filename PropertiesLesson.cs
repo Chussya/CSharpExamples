@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CSharpHints
+﻿namespace CSharpHints
 {
     class User
     {
-        private string name = null;
+        private string name = string.Empty;
 
         // Use properties:
         public string Name

@@ -1,36 +1,47 @@
-﻿namespace AbstractClassExample
+﻿namespace CSharpHints
 {
-    internal abstract class AbstractClass
+    internal class AbstractClassLesson : ILesson
     {
-        public bool baseValue { get; set; }
-        public abstract bool abstractValue { get; set; }
-
-        public AbstractClass() { }
-
-        public AbstractClass(bool baseValue) { }
-    }
-
-    internal class DerrivedClass : AbstractClass
-    {
-        public override bool abstractValue
+        internal abstract class AbstractClass
         {
-            get => abstractValue;
-            set
+            public bool BaseValue { get; set; }
+            public abstract bool DerrivedValue { get; set; }
+
+            public AbstractClass() { }
+
+            public AbstractClass(bool baseValue)
             {
-                abstractValue = value;
-                baseValue = !value;
+                this.BaseValue = baseValue;
+                this.DerrivedValue = baseValue;
             }
         }
 
-        public DerrivedClass() : base() { }
-        public DerrivedClass(bool baseValue, bool abstractValue) : base(baseValue) { }
-    }
-
-    internal class AbstractClassLesson
-    {
-        public void Main()
+        internal class DerrivedClass : AbstractClass
         {
+            public new bool BaseValue { get; set; } = false;
+            public override bool DerrivedValue { get; set; }
 
+            // For use constructor of base class you should use this: ': base(arguments)'
+            public DerrivedClass() : base() { }
+            public DerrivedClass(bool baseValue, bool derrivedValue) : base(baseValue)
+            {
+                // baseValue will be init in base constructor because used ': base(baseValue)'
+                // also, instead of, can write like:
+                // this.baseValue = baseValue;
+                this.DerrivedValue = derrivedValue;
+            }
+        }
+
+        public void StartLesson()
+        {
+            AbstractClass correctInit = new DerrivedClass();  // Cannot use constructor of base class: = new AbstractClass() - incorrect!
+            AbstractClass abstractClass = new DerrivedClass(true, false);
+            DerrivedClass derrivedClass = new DerrivedClass(true, false);
+
+            Console.WriteLine($"BaseValue of abstractClass: {abstractClass.BaseValue}");
+            Console.WriteLine($"DerrivedValue of abstractClass: {abstractClass.DerrivedValue}");
+            Console.WriteLine($"BaseValue of derrivedClass: {derrivedClass.BaseValue}");
+            Console.WriteLine($"DerrivedValue of derrivedClass: {derrivedClass.DerrivedValue}");
         }
     }
 }

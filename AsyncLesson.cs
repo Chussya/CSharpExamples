@@ -4,15 +4,19 @@
     {
         public void StartLesson()
         {
-            Task task = new Task(AsyncStart);
-            task.Start();
-            task.Wait();
+            Console.WriteLine($"Start async...");
+            try
+            {
+                Task.Run(StartAsync).Wait();
+            }
+            finally
+            {
+                Console.WriteLine($"End async...");
+            }
         }
 
-        public async void AsyncStart()
+        public async Task StartAsync() // Task type necessary for .Wait(). If you'll use void, Wait will not wait =)
         {
-            Console.WriteLine($"Start async...");
-
             // Way 1:
             await Print(1); // call Print and await it
             await Print(2); // same
@@ -31,14 +35,12 @@
             int result = await await Task.WhenAny(Sum(1, 1), Sum(2, 3));
 
             Console.WriteLine($"Result from WhenAll:\narr[0]={arr[0]}\narr[1]={arr[1]}\nResult from WhenAny:\nresult={result}");
-
-            Console.WriteLine($"End async...");
         }
 
         private async Task Print(int n)
         {
             Console.WriteLine($"Task{n} starts: ThreadId:{Thread.CurrentThread.ManagedThreadId}");
-            await Task.Delay(5000); // Sleeping... Thread go next
+            await Task.Delay(1000); // Sleeping... Thread go next
             Console.WriteLine($"Task{n} ends: ThreadId:{Thread.CurrentThread.ManagedThreadId}");
         }
 

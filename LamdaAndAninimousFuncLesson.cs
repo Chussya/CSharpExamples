@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CSharpHints
+﻿namespace CSharpHints
 {
     class LamdaAndAninimousFuncLesson : ILesson
     {
@@ -20,12 +16,12 @@ namespace CSharpHints
 
             IsEquals lambdaFunction = x => x > 2;
 
-            calc(integers, anonimousFunction);
-            calc(integers, lambdaFunction);
-            calc(integers, x => x > 1);
+            Calc(integers, anonimousFunction);
+            Calc(integers, lambdaFunction);
+            Calc(integers, x => x > 1);
         }
 
-        private void calc(int[] integers, IsEquals func)
+        private void Calc(int[] integers, IsEquals func)
         {
             foreach (int i in integers)
             {

@@ -1,21 +1,19 @@
-﻿using System;
-
-namespace CSharpHints
+﻿namespace CSharpHints
 {
     class SyntaxRules : ILesson
     {
-        class Messenger<T> where T : Message
+        class Messenger<T> where T : AppMessage
         {
             public void SendMessage(T message)
             {
-                Console.WriteLine($"Отправляется сообщения: {message.Text}");
+                Console.WriteLine($"Transfer message: {message.Text}");
             }
         }
 
-        class Message
+        class AppMessage
         {
-            public string Text { get; } // текст сообщения
-            public Message(string text)
+            public string Text { get; } // message
+            public AppMessage(string text)
             {
                 try
                 {
@@ -23,22 +21,30 @@ namespace CSharpHints
                 }
                 catch when (text == null)
                 {
-                    // код
+                    // code
                 }
             }
         }
-        class EmailMessage : Message
+
+        class EmailMessage : AppMessage
         {
             public EmailMessage(string text) : base(text) { }
         }
 
+        class PhoneMessage
+        {
+            public PhoneMessage(string text) { }
+        }
+
         public void StartLesson()
         {
-            Messenger<Message> telegram = new Messenger<Message>();
-            telegram.SendMessage(new Message("Hello World"));
+            Messenger<AppMessage> whatsApp = new Messenger<AppMessage>();
+            whatsApp.SendMessage(new AppMessage("App message"));
 
             Messenger<EmailMessage> outlook = new Messenger<EmailMessage>();
-            outlook.SendMessage(new EmailMessage("Bye World"));
+            outlook.SendMessage(new EmailMessage("Email message"));
+
+            // Messenger<PhoneMessage> mobileOperator = new Messenger<PhoneMessage>(); // isn't correct, because Messenger's T get only AppMessage type
         }
     }
 }

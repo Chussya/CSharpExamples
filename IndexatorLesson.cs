@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CSharpHints
+﻿namespace CSharpHints
 {
     class IndexatorLesson : ILesson
     {
         class Person
         {
             public string Name { get; set; }
+
+            public Person(string name)
+            {
+                Name = name;
+            }
         }
         class People
         {
             Person[] data;
             public People()
             {
-                data = new Person[5];
+                data = new Person[2];
             }
 
             public Person this[int index]
@@ -34,7 +35,7 @@ namespace CSharpHints
             {
                 get
                 {
-                    return Array.Find(data, p => p.Name == name);
+                    return Array.Find(data, p => p.Name == name)!;
                 }
                 set
                 {
@@ -47,8 +48,8 @@ namespace CSharpHints
         public void StartLesson()
         {
             People people = new People();
-            people[0] = new Person { Name = "Tom" };
-            people[1] = new Person { Name = "Bob" };
+            people[0] = new Person("Tom");
+            people[1] = new Person("Bob");
 
             Person tom = people[0];
             Person bob = people["Bob"];

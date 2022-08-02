@@ -1,20 +1,18 @@
 ﻿using System;
-using InterfaceExample;
 
 namespace CSharpHints
 {
     internal class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            Console.WriteLine("===========================Start Lesson===========================");
-            ILesson lesson = new AsyncLesson();
+            string lines = new string('=', 30);
+            Console.WriteLine($"{lines}Start Lesson{lines}");
+
+            ILesson lesson = new SyntaxRules();  // For check another lesson just rename class name ;)
             lesson.StartLesson();
-            while (true)
-            {
-                Thread.Sleep(1000);
-            }
-            Console.WriteLine("============================End Lesson============================");
+
+            Console.WriteLine($"{lines}End Lesson{lines}");
         }
     }
 }

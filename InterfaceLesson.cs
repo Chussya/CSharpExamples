@@ -1,96 +1,90 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InterfaceExample
+﻿namespace CSharpHints
 {
-    interface IMove
+    internal class InterfaceLesson : ILesson
     {
-        void Move() => Console.WriteLine("Move: I am moving");
-    }
-
-    interface IWalk : IMove
-    {
-        new void Move() => Console.WriteLine("Move with new: I am walking"); // also can write without 'new' word: void Move() => ...
-        void Walk() => Console.WriteLine("Walk: I am walking");
-    }
-
-    interface IDrive : IMove
-    {
-        new void Move() => Console.WriteLine("Move with new: I am driving");
-        void Drive() => Console.WriteLine("Drive: I am driving");
-    }
-
-    class Mover : IMove
-    {
-    }
-
-    class Human : IWalk
-    {
-
-    }
-
-    class Driver : IMove, IWalk, IDrive
-    {
-        private bool hasCar = false;
-
-        public Driver(bool hasCar)
+        interface IRun
         {
-            this.hasCar = hasCar;
+            void Run() => Console.WriteLine("Runner: I can run");
         }
 
-        public void Move()
+        interface IBycicle : IRun
         {
-            Console.WriteLine("Overriding IMove.Move:");
-            if (hasCar) Drive();
-            else Walk();
+            new void Run() => Console.WriteLine("Bycicler: I can run");
+            void DriveBycicle() => Console.WriteLine("Bycicler: I can drive a bycicle");
         }
 
-        public void Walk()
+        interface IDrive : IRun
         {
-            Console.WriteLine("Overriding IWalk.Walk: I am walking");
+            void Run() => Console.WriteLine("Driver: I can run");   // You can write method withoud 'new' key word, because it's interface and you rewrite base method
+            void DriveCar() => Console.WriteLine("Driver: I can drive a car");
         }
 
-        public void Drive()
+        class Runner : IRun
         {
-            Console.WriteLine("Overriding IDrive.Drive: I am driving");
         }
 
-        void IDrive.Move()
+        class Cyclist : IBycicle
         {
-            Console.WriteLine("IDrive.Move: I am driving");
+
         }
 
-        void IWalk.Move()
+        class Driver : IRun, IBycicle, IDrive
         {
-            Console.WriteLine("IWalk.Move: I am walking");
-        }
-    }
+            private bool hasCar = false;
 
-    internal class InterfaceLesson
-    {
-        public static void Start()
+            public Driver(bool hasCar)
+            {
+                this.hasCar = hasCar;
+            }
+
+            public void Run()
+            {
+                Console.WriteLine("DriverClass: I can run and...");
+                if (hasCar) DriveCar();
+                else DriveBycicle();
+            }
+
+            public void DriveBycicle()
+            {
+                Console.WriteLine("DriverClass: I can drive a bycicle");
+            }
+
+            public void DriveCar()
+            {
+                Console.WriteLine("DriverClass: I can drive a car");
+            }
+
+            void IDrive.Run()
+            {
+                Console.WriteLine("IDrive.Run: I can run");
+            }
+
+            void IBycicle.Run()
+            {
+                Console.WriteLine("IBycicle.Run: I can run");
+            }
+        }
+
+        public void StartLesson()
         {
             // Implementing Default Interfaces:
-            IMove move = new Mover();
-            move.Move();
+            IRun runner = new Runner();
+            runner.Run();
             Console.WriteLine();
 
-            // Using hiding method Move and new method Walk:
-            IWalk walk = new Human();
-            walk.Move();
-            walk.Walk();
+            // Using hiding method Run and new method DriveBycicle:
+            IBycicle cycler = new Cyclist();
+            cycler.Run();
+            cycler.DriveBycicle();
             Console.WriteLine();
 
-            //
+            // Mix all :D
             Driver driver = new Driver(true);
-            driver.Move();
-            driver.Walk();
-            driver.Drive();
-            ((IWalk)driver).Move();
-            ((IDrive)driver).Move();
+            driver.Run();
+            driver.DriveBycicle();
+            driver.DriveCar();
+            ((IDrive)driver).Run();
+            ((IBycicle)driver).Run();
         }
     }
 }

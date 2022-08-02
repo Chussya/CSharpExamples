@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSharpHints
+﻿namespace CSharpHints
 {
     internal class ClosuresLesson : ILesson
     {
@@ -29,13 +23,37 @@ namespace CSharpHints
             //}
 
             // For .NET >= 6.0
-            var multiply = () => { int n = 5; return () => n *= 2; };
+            var multiply = () =>
+            {
+                int x = 5;
+                return () => ++x;
+            };
+            dynamic fn = multiply();    // fn = 'return () => ++x' and x inited at once
 
-            var fn = multiply();
+            Console.WriteLine(fn());    // 6
+            Console.WriteLine(fn());    // 7
+            Console.WriteLine(fn());    // 8
 
-            Console.WriteLine(fn());
-            Console.WriteLine(fn());
-            Console.WriteLine(fn());
+            // How to fix it?
+
+            fn = multiply;   // fn = signature of multiply (all code into multiply)
+
+            Console.WriteLine(fn()());    // 6
+            Console.WriteLine(fn()());    // 6
+            Console.WriteLine(fn()());    // 6
+
+            // or
+
+            var multiplyFix = () =>
+            {
+                int x = 5;
+                return () => { int y = x; return ++y; };
+            };
+            fn = multiplyFix(); // fn = 'return () => { int y = x; return ++y; }' and x inited at once, but it doesn't matter, cause return 'y' value;
+
+            Console.WriteLine(fn());    // 6
+            Console.WriteLine(fn());    // 6
+            Console.WriteLine(fn());    // 6
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace CSharpHints
+﻿namespace CSharpHints
 {
     internal class ParallelLesson : ILesson
     {
