@@ -28,5 +28,5 @@ namespace CSharpHints
 
 ## IDE and other settings
 * This project was created on [Visual Studio 2022](https://visualstudio.microsoft.com/)
-* C# version - 10
-* .NET Framework version - 6.0
+* C# version - 10 (depends on your .NET version(Core, Framework and etc.))
+* .NET Framework version - [6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
