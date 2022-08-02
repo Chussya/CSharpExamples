@@ -1,11 +1,13 @@
 # CSharpHints
+**In this project, you will be able to see some of the features of C# through code examples.**
 
-# Sources
+## Sources
 **Some examples from this project taken from the [Metanit](https://metanit.com)**
 
-# Guide
+## Guide
 For run some lesson just choose name of lesson in Program.cs:
 
+```csharp
 namespace CSharpHints
 {
     internal class Program
@@ -22,8 +24,9 @@ namespace CSharpHints
         }
     }
 }
+```
 
-# IDE and other settings
+## IDE and other settings
 * This project was created on [Visual Studio 2022](https://visualstudio.microsoft.com/)
 * C# version - 10
 * .NET Framework version - 6.0
