@@ -7,7 +7,7 @@
             Console.WriteLine($"Start async...");
             try
             {
-                Task.Run(StartAsync).Wait();
+                StartAsync().Wait();
             }
             finally
             {
