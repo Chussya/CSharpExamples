@@ -429,76 +429,14 @@ namespace SortAlg
     public class QuickSort : ISort
     {
         private int[] arr;
-        private int indexOfMaxGlobal;
-        private int indexOfMinGlobal;
 
         public QuickSort(int[] arr)
         {
             this.arr = arr;
-            indexOfMinGlobal = Array.IndexOf(arr, arr.Min());
-            indexOfMaxGlobal = Array.IndexOf(arr, arr.Max());
 
             Console.Write($"Array before:");
             Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
             Console.WriteLine();
-        }
-
-        private int GetIndexOfPivot()
-        {
-            int average = (arr[indexOfMinGlobal] + arr[indexOfMaxGlobal]) / 2;
-
-            if (arr.Contains(average)) return Array.IndexOf(arr, average);
-
-            // Find closer pivot element:
-            // Firstly, try find closer min and max elements to average:
-            int indexOfMin = indexOfMinGlobal;
-            int indexOfMax = indexOfMaxGlobal;
-            int distFromMin = average - arr[indexOfMin];
-            int distFromMax = arr[indexOfMax] - average;
-
-            for (int i = 1; i < arr.Length - 1; ++i)
-            {
-                if (arr[i] > arr[indexOfMin] && arr[i] - arr[indexOfMin] < distFromMin)
-                {
-                    distFromMin = arr[i] - arr[indexOfMin];
-                    indexOfMin = i;
-                }
-                if (arr[i] < arr[indexOfMax] && arr[indexOfMax] - arr[i] < distFromMax)
-                {
-                    distFromMax = arr[indexOfMax] - arr[i];
-                    indexOfMax = i;
-                }
-            }
-
-            // Finally, just check the result and choose the most efficient one:
-            return indexOfMaxGlobal - indexOfMax >= indexOfMinGlobal - indexOfMin
-                ? indexOfMax
-                : indexOfMin;
-        }
-
-        private void Sort(bool increase, int indexMax, int indexMin)
-        {
-            int indexOfPivot = GetIndexOfPivot();
-
-            if (indexOfPivot != arr.Length / 2)
-                (arr[indexOfPivot], arr[arr.Length / 2]) = (arr[arr.Length / 2], arr[indexOfPivot]);
-
-            if (increase)
-            {
-                for (int i = indexMin; i < indexMax - 1; ++i)
-                {
-                    if (arr[i] > arr[i + 1])
-                        (arr[i], arr[i + 1]) = (arr[i + 1], arr[i]);
-                }
-            }
-            else
-            {
-                for (int i = indexMin; i < indexMax - 1; ++i)
-                {
-                    if (arr[i] < arr[i + 1])
-                        (arr[i], arr[i + 1]) = (arr[i + 1], arr[i]);
-                }
-            }
         }
 
         public bool IsSortable()
@@ -523,7 +461,7 @@ namespace SortAlg
         public void SortMax()
         {
             if (!IsSortable()) return;
-            Sort(true, indexOfMaxGlobal, indexOfMinGlobal);
+            Sort(true, 0, arr.Length - 1);
             Console.Write($"Array after max SELECTION sort:");
             Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
             Console.WriteLine();
@@ -532,10 +470,39 @@ namespace SortAlg
         public void SortMin()
         {
             if (!IsSortable()) return;
+            Sort(false, 0, arr.Length - 1);
             Console.Write($"Array after min SELECTION sort:");
             Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
             Console.WriteLine();
         }
 
+        private int GetIndexOfPivot(bool increase, int start, int end)
+        {
+            int indexOfPivot = start;
+
+            for (int i = start; i <= end; ++i)
+            {
+                if (increase && arr[i] <= arr[end])
+                {
+                    (arr[i], arr[indexOfPivot]) = (arr[indexOfPivot], arr[i]);
+                    ++indexOfPivot;
+                }
+                else if (!increase && arr[i] > arr[end])
+                {
+                    (arr[i], arr[indexOfPivot]) = (arr[indexOfPivot], arr[i]);
+                    ++indexOfPivot;
+                }
+            }
+            return --indexOfPivot;
+        }
+
+        private void Sort(bool increase, int start, int end)
+        {
+            if (start > end) return;
+
+            int indexOfPivot = GetIndexOfPivot(increase, start, end);
+            Sort(increase, start, indexOfPivot - 1);
+            Sort(increase, indexOfPivot + 1, end);
+        }
     }
 }
