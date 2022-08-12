@@ -9,7 +9,7 @@ namespace CSharpHints
             string lines = new string('=', 30);
             Console.WriteLine($"{lines}Start Lesson{lines}");
 
-            ILesson lesson = new EnumeratorAndEnumerableLesson();  // For check another lesson just rename class name ;)
+            ILesson lesson = new SortAlgorithmLesson();  // For check another lesson just rename class name ;)
             lesson.StartLesson();
 
             Console.WriteLine($"{lines}End Lesson{lines}");
