@@ -14,14 +14,9 @@ namespace CSharpHints
 
         public void StartLesson()
         {
-            ISort sort = new QuickSort(arr);
+            ISort sort = new MergeSort(arr);
             sort.SortMax();
-            sort = new QuickSort(arr1);
-            sort.SortMax();
-            sort = new QuickSort(arr2);
-            sort.SortMax();
-            sort = new QuickSort(arr3);
-            sort.SortMax();
+            sort.SortMin();
         }
     }
 }
@@ -30,12 +25,34 @@ namespace SortAlg
 {
     public interface ISort
     {
-        public bool IsSortable();
         public void SortMax();
         public void SortMin();
     }
 
-    public class BubbleSort : ISort
+    public abstract class SortAbstract
+    {
+        public bool IsSortable(int[] arr, bool increase)
+        {
+            if (arr.Length <= 1)
+            {
+                Console.WriteLine("Array's length = 1, nothing to sort.");
+                return false;
+            }
+            else
+            {
+                for (int i = 0; i < arr.Length - 1; ++i)
+                {
+                    if ((increase && arr[i] > arr[i + 1])
+                        || (!increase && arr[i] < arr[i + 1]))
+                        return true;
+                }
+                Console.WriteLine("Array is already sorted.");
+                return false;
+            }
+        }
+    }
+
+    public class BubbleSort : SortAbstract, ISort
     {
         private int[] arr;
 
@@ -48,28 +65,9 @@ namespace SortAlg
             Console.WriteLine();
         }
 
-        public bool IsSortable()
-        {
-            if (arr.Length <= 1)
-            {
-                Console.WriteLine("Array's length = 1, nothing to sort.");
-                return false;
-            }
-            else
-            {
-                for (int i = 0; i < arr.Length - 1; ++i)
-                {
-                    if (arr[i] > arr[i + 1])
-                        return true;
-                }
-                Console.WriteLine("Array is already sorted.");
-                return false;
-            }
-        }
-
         public void SortMax()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, true)) return;
             for (int i = 0; i < arr.Length; ++i)
             {
                 for (int j = 0; j < arr.Length - (i + 1); ++j)
@@ -89,7 +87,7 @@ namespace SortAlg
 
         public void SortMin()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, false)) return;
             for (int i = 0; i < arr.Length; ++i)
             {
                 for (int j = 0; j < arr.Length - (i + 1); ++j)
@@ -108,7 +106,7 @@ namespace SortAlg
         }
     }
 
-    public class ShakerSort : ISort
+    public class ShakerSort : SortAbstract, ISort
     {
         private int[] arr;
 
@@ -121,28 +119,9 @@ namespace SortAlg
             Console.WriteLine();
         }
 
-        public bool IsSortable()
-        {
-            if (arr.Length <= 1)
-            {
-                Console.WriteLine("Array's length = 1, nothing to sort.");
-                return false;
-            }
-            else
-            {
-                for (int i = 0; i < arr.Length - 1; ++i)
-                {
-                    if (arr[i] > arr[i + 1])
-                        return true;
-                }
-                Console.WriteLine("Array is already sorted.");
-                return false;
-            }
-        }
-
         public void SortMax()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, true)) return;
             for (int i = 0; i < arr.Length / 2; ++i)
             {
                 for (int j = 0; j < arr.Length - (i + 1); ++j)
@@ -171,7 +150,7 @@ namespace SortAlg
 
         public void SortMin()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, false)) return;
             for (int i = 0; i < arr.Length; ++i)
             {
                 for (int j = 0; j < arr.Length - (i + 1); ++j)
@@ -199,7 +178,7 @@ namespace SortAlg
         }
     }
 
-    public class CombSort : ISort
+    public class CombSort : SortAbstract, ISort
     {
         private int[] arr;
 
@@ -212,28 +191,9 @@ namespace SortAlg
             Console.WriteLine();
         }
 
-        public bool IsSortable()
-        {
-            if (arr.Length <= 1)
-            {
-                Console.WriteLine("Array's length = 1, nothing to sort.");
-                return false;
-            }
-            else
-            {
-                for (int i = 0; i < arr.Length - 1; ++i)
-                {
-                    if (arr[i] > arr[i + 1])
-                        return true;
-                }
-                Console.WriteLine("Array is already sorted.");
-                return false;
-            }
-        }
-
         public void SortMax()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, true)) return;
 
             int gap = arr.Length - 1;
 
@@ -259,7 +219,7 @@ namespace SortAlg
 
         public void SortMin()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, false)) return;
 
             int gap = arr.Length - 1;
 
@@ -284,7 +244,7 @@ namespace SortAlg
         }
     }
 
-    public class InsertionSort : ISort
+    public class InsertionSort : SortAbstract, ISort
     {
         private int[] arr;
 
@@ -297,28 +257,9 @@ namespace SortAlg
             Console.WriteLine();
         }
 
-        public bool IsSortable()
-        {
-            if (arr.Length <= 1)
-            {
-                Console.WriteLine("Array's length = 1, nothing to sort.");
-                return false;
-            }
-            else
-            {
-                for (int i = 0; i < arr.Length - 1; ++i)
-                {
-                    if (arr[i] > arr[i + 1])
-                        return true;
-                }
-                Console.WriteLine("Array is already sorted.");
-                return false;
-            }
-        }
-
         public void SortMax()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, true)) return;
             for (int i = 0; i < arr.Length - 1; ++i)
             {
                 if (arr[i] > arr[i + 1])
@@ -336,7 +277,7 @@ namespace SortAlg
 
         public void SortMin()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, false)) return;
             for (int i = 0; i < arr.Length - 1; ++i)
             {
                 if (arr[i] < arr[i + 1])
@@ -353,7 +294,7 @@ namespace SortAlg
         }
     }
 
-    public class SelectionSort : ISort
+    public class SelectionSort : SortAbstract, ISort
     {
         private int[] arr;
 
@@ -366,28 +307,9 @@ namespace SortAlg
             Console.WriteLine();
         }
 
-        public bool IsSortable()
-        {
-            if (arr.Length <= 1)
-            {
-                Console.WriteLine("Array's length = 1, nothing to sort.");
-                return false;
-            }
-            else
-            {
-                for (int i = 0; i < arr.Length - 1; ++i)
-                {
-                    if (arr[i] > arr[i + 1])
-                        return true;
-                }
-                Console.WriteLine("Array is already sorted.");
-                return false;
-            }
-        }
-
         public void SortMax()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, true)) return;
             for (int i = 0; i < arr.Length - 1; ++i)
             {
                 int memIndex = i;
@@ -407,7 +329,7 @@ namespace SortAlg
 
         public void SortMin()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, false)) return;
             for (int i = 0; i < arr.Length - 1; ++i)
             {
                 int memIndex = i;
@@ -426,7 +348,7 @@ namespace SortAlg
         }
     }
 
-    public class QuickSort : ISort
+    public class QuickSort : SortAbstract, ISort
     {
         private int[] arr;
 
@@ -439,28 +361,9 @@ namespace SortAlg
             Console.WriteLine();
         }
 
-        public bool IsSortable()
-        {
-            if (arr.Length <= 1)
-            {
-                Console.WriteLine("Array's length = 1, nothing to sort.");
-                return false;
-            }
-            else
-            {
-                for (int i = 0; i < arr.Length - 1; ++i)
-                {
-                    if (arr[i] > arr[i + 1])
-                        return true;
-                }
-                Console.WriteLine("Array is already sorted.");
-                return false;
-            }
-        }
-
         public void SortMax()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, true)) return;
             Sort(true, 0, arr.Length - 1);
             Console.Write($"Array after max SELECTION sort:");
             Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
@@ -469,7 +372,7 @@ namespace SortAlg
 
         public void SortMin()
         {
-            if (!IsSortable()) return;
+            if (!IsSortable(arr, false)) return;
             Sort(false, 0, arr.Length - 1);
             Console.Write($"Array after min SELECTION sort:");
             Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
@@ -503,6 +406,70 @@ namespace SortAlg
             int indexOfPivot = GetIndexOfPivot(increase, start, end);
             Sort(increase, start, indexOfPivot - 1);
             Sort(increase, indexOfPivot + 1, end);
+        }
+    }
+
+    public class MergeSort : SortAbstract, ISort
+    {
+        private int[] arr;
+
+        public MergeSort(int[] arr)
+        {
+            this.arr = arr;
+
+            Console.Write($"Array before:");
+            Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
+            Console.WriteLine();
+        }
+
+        public void SortMax()
+        {
+            if (!IsSortable(arr, true)) return;
+            Sort(true, 0, arr.Length - 1, new int[arr.Length]);
+            Console.Write($"Array after max SELECTION sort:");
+            Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
+            Console.WriteLine();
+        }
+
+        public void SortMin()
+        {
+            if (!IsSortable(arr, false)) return;
+            Sort(false, 0, arr.Length - 1, new int[arr.Length]);
+            Console.Write($"Array after min SELECTION sort:");
+            Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
+            Console.WriteLine();
+        }
+
+        private void Sort(bool increase, int start, int end, int[] buf)
+        {
+            if (start < end)
+            {
+                int middle = (end - start) / 2 + start;
+                Sort(increase, start, middle, buf);
+                Sort(increase, middle + 1, end, buf);
+
+                int k = start;
+                for (int i = start, j = middle + 1; i <= middle || j <= end;)
+                {
+                    if (j > end
+                        || (increase && i <= middle && arr[i] < arr[j])
+                        || (!increase && i <= middle && arr[i] > arr[j]))
+                    {
+                        buf[k] = arr[i];
+                        ++i;
+                    }
+                    else
+                    {
+                        buf[k] = arr[j];
+                        ++j;
+                    }
+                    ++k;
+                }
+                for (int i = start; i <= end; ++i)
+                {
+                    arr[i] = buf[i];
+                }
+            }
         }
     }
 }
