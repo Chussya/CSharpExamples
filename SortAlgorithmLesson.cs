@@ -8,15 +8,43 @@ namespace CSharpHints
     class SortAlgorithmLesson : ILesson
     {
         private int[] arr = { 9, 0, 8, 1, 7, 2, 6, 3, 5, 4 };
-        private int[] arr1 = { 0, 1 };
-        private int[] arr2 = { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1 };
-        private int[] arr3 = { 1, 1, 1, 1, 1, 1, 1 };
 
         public void StartLesson()
         {
-            ISort sort = new MergeSort(arr);
+            ISort sort = new BubbleSort(arr);
             sort.SortMax();
             sort.SortMin();
+            Console.WriteLine();
+
+            sort = new ShakerSort(arr);
+            sort.SortMax();
+            sort.SortMin();
+            Console.WriteLine();
+
+            sort = new CombSort(arr);
+            sort.SortMax();
+            sort.SortMin();
+            Console.WriteLine();
+
+            sort = new InsertionSort(arr);
+            sort.SortMax();
+            sort.SortMin();
+            Console.WriteLine();
+
+            sort = new SelectionSort(arr);
+            sort.SortMax();
+            sort.SortMin();
+            Console.WriteLine();
+
+            sort = new QuickSort(arr);
+            sort.SortMax();
+            sort.SortMin();
+            Console.WriteLine();
+
+            sort = new MergeSort(arr);
+            sort.SortMax();
+            sort.SortMin();
+            Console.WriteLine();
         }
     }
 }
@@ -365,7 +393,7 @@ namespace SortAlg
         {
             if (!IsSortable(arr, true)) return;
             Sort(true, 0, arr.Length - 1);
-            Console.Write($"Array after max SELECTION sort:");
+            Console.Write($"Array after max QUICK sort:");
             Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
             Console.WriteLine();
         }
@@ -374,7 +402,7 @@ namespace SortAlg
         {
             if (!IsSortable(arr, false)) return;
             Sort(false, 0, arr.Length - 1);
-            Console.Write($"Array after min SELECTION sort:");
+            Console.Write($"Array after min QUICK sort:");
             Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
             Console.WriteLine();
         }
@@ -385,12 +413,8 @@ namespace SortAlg
 
             for (int i = start; i <= end; ++i)
             {
-                if (increase && arr[i] <= arr[end])
-                {
-                    (arr[i], arr[indexOfPivot]) = (arr[indexOfPivot], arr[i]);
-                    ++indexOfPivot;
-                }
-                else if (!increase && arr[i] > arr[end])
+                if ((increase && arr[i] <= arr[end])
+                    || (!increase && arr[i] >= arr[end]))
                 {
                     (arr[i], arr[indexOfPivot]) = (arr[indexOfPivot], arr[i]);
                     ++indexOfPivot;
@@ -426,7 +450,7 @@ namespace SortAlg
         {
             if (!IsSortable(arr, true)) return;
             Sort(true, 0, arr.Length - 1, new int[arr.Length]);
-            Console.Write($"Array after max SELECTION sort:");
+            Console.Write($"Array after max MERGE sort:");
             Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
             Console.WriteLine();
         }
@@ -435,7 +459,7 @@ namespace SortAlg
         {
             if (!IsSortable(arr, false)) return;
             Sort(false, 0, arr.Length - 1, new int[arr.Length]);
-            Console.Write($"Array after min SELECTION sort:");
+            Console.Write($"Array after min MERGE sort:");
             Array.ForEach(arr, x => Console.Write(" " + x.ToString() + " "));
             Console.WriteLine();
         }
