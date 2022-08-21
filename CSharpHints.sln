@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpHints", "CSharpHints.csproj", "{ACDEA484-CA1C-4A4C-A813-03E53DD65713}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpHints", "CSharpHints.csproj", "{ACDEA484-CA1C-4A4C-A813-03E53DD65713}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharpGeneral", "CSharpGeneral", "{2E7D15A0-3E23-4E88-A664-848428E307C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat(SignalR)", "Chat(SignalR)", "{61956EB4-5ABA-4D8F-9C96-928A53B4B262}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +22,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ACDEA484-CA1C-4A4C-A813-03E53DD65713} = {2E7D15A0-3E23-4E88-A664-848428E307C2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DCEDD5D8-06AD-44E9-80D3-C6D5679E0CAA}
